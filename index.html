@@ -8,9 +8,10 @@
 body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;max-width:900px;margin:0 auto;padding:24px 16px;line-height:1.5;color:#1d1d1f;background:#fff}
 h1{margin-bottom:4px}h2{border-top:2px solid #f7931a;padding-top:16px;margin-top:32px}
 .note{background:#fff7ec;border-left:4px solid #f7931a;padding:10px 14px;margin:12px 0}
+.warn{background:#fdecee;border-left:4px solid #b00020;padding:10px 14px;margin:12px 0}
 .what{background:#f2f6fb;border-left:4px solid #3b6ea5;padding:10px 14px;margin:12px 0}
 label{display:block;margin-top:10px;font-weight:600}
-input,textarea,select{width:100%;padding:8px;font-size:15px;box-sizing:border-box;border:1px solid #bbb;border-radius:6px}
+input,textarea{width:100%;padding:8px;font-size:15px;box-sizing:border-box;border:1px solid #bbb;border-radius:6px;font-family:inherit}
 input.num{background:#fffbe6}
 textarea{min-height:110px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
@@ -28,20 +29,22 @@ button.sec{background:#3b6ea5}
 <body>
 
 <h1>Bitcoin Treasury Lab</h1>
-<p><strong>Finance and Blockchain · Week 2.</strong> Evaluate one company's decision to hold bitcoin on its balance sheet, using its own financial disclosures.</p>
+<p><strong>BLCN 533: Finance and Blockchain · Week 2.</strong> Evaluate one company's decision to hold bitcoin on its balance sheet, using its own financial disclosures.</p>
 
 <div class="note"><strong>You are not evaluating bitcoin.</strong> You are evaluating a specific executive team's decision to put it on their balance sheet, given their company's financial profile, risk tolerance and strategic posture. Strategy (MSTR) is the anchor case. Pick a <em>different</em> company for this lab.</div>
+
+<div class="warn"><strong>⚠ This page does not save your work.</strong> If you close this tab, refresh it, or your browser crashes, everything you typed is gone. Draft your long answers in a document first, then paste them in. When you finish, click <strong>Download my work</strong> in Step 7 before you close the page.</div>
 
 <h2>Title block (APA 7th)</h2>
 <div class="grid">
 <div><label>Your name</label><input id="name"></div>
-<div><label>Course</label><input id="course" value="Finance and Blockchain"></div>
-<div><label>Instructor</label><input id="instructor"></div>
+<div><label>Course</label><input id="course" value="BLCN 533: Finance and Blockchain"></div>
+<div><label>Instructor</label><input id="instructor" value="Dr. Michael Tabone"></div>
 <div><label>Date</label><input id="date" type="date"></div>
 </div>
 
 <h2>Step 1: Pick your company and pull its disclosures</h2>
-<div class="what"><strong>What's happening:</strong> every number below comes from the company's most recent 10-Q or 10-K (or its investor-relations bitcoin page). Reading the filing yourself is part of the exercise. Write down the page or note number so your instructor can check your source.</div>
+<div class="what"><strong>What's happening:</strong> every number below comes from the company's most recent 10-Q or 10-K (or its investor-relations bitcoin page). Reading the filing yourself is part of the exercise. Paste the link to every source you use in Step 6.</div>
 <div class="grid">
 <div><label>Company name</label><input id="co"></div>
 <div><label>Ticker</label><input id="ticker"></div>
@@ -73,13 +76,13 @@ button.sec{background:#3b6ea5}
 <h2>Step 3: The metrics</h2>
 <div class="what"><strong>What's happening:</strong> these are the metrics Strategy reports. <strong>mNAV</strong> is market cap divided by the market value of the bitcoin. Above 1, investors pay a premium for each dollar of bitcoin the company holds, which lets it issue stock to buy more. <strong>Bitcoin yield</strong> is the percent change in bitcoin per diluted share. It is a company KPI, not a yield in the bond sense, and it ignores debt and preferred claims.</div>
 <button class="sec" onclick="calc()">Calculate</button>
-<table id="out"><tr><th>Metric</th><th>Value</th></tr></table>
+<table id="out"></table>
 
 <h2>Step 4: Scenario test (down and up)</h2>
 <div class="what"><strong>What's happening:</strong> bitcoin has fallen more than 50% several times, and it has also more than doubled in a single year. A CFO shows the board both. On the downside, the question is whether the company can still cover its debt, interest and preferred dividends. On the upside, fair-value accounting puts the gain straight into reported earnings. That swings net income, can create tax and covenant questions, and tends to push the mNAV premium up, which tempts management to issue more stock and buy more bitcoin.</div>
-<label>Bitcoin price change: <span id="dropv">-50</span>%</label>
+<label>Bitcoin price change: <span id="dropv">-50%</span></label>
 <input id="drop" type="range" min="-90" max="200" step="5" value="-50">
-<table id="stress"><tr><th>After the move</th><th>Value</th></tr></table>
+<table id="stress"></table>
 <p class="small"><strong>Quick comparison:</strong> five common scenarios at once.</p>
 <div class="scroll"><table id="scen"></table></div>
 
@@ -90,7 +93,13 @@ button.sec{background:#3b6ea5}
 <label>4. Tokenomics: how do bitcoin's fixed supply and halving schedule factor into the decision, and where is that argument weakest?</label><textarea id="q4"></textarea>
 <label>5. Verdict: was this a sound decision for <em>this</em> executive team? What would you change as CFO?</label><textarea id="q5"></textarea>
 
-<h2>Step 6: Hand it in</h2>
+<h2>Step 6: Sources (links)</h2>
+<div class="what"><strong>What's happening:</strong> your instructor needs to be able to check where every number came from. Paste one link per line. <strong>Required:</strong> the SEC filing you used (from sec.gov/edgar or the company's investor-relations page) and the source of your bitcoin price. Add any other articles or pages you used. Full APA references go in your paper.</div>
+<label>Links to your sources (one per line)</label>
+<textarea id="src" placeholder="https://www.sec.gov/...&#10;https://www.coingecko.com/en/coins/bitcoin"></textarea>
+
+<h2>Step 7: Hand it in</h2>
+<div class="warn"><strong>⚠ Download before you close this page.</strong> Nothing is saved here. Upload the downloaded file to the assignment.</div>
 <button onclick="download()">Download my work (opens in Excel or Numbers)</button>
 <p class="small">Everything happens in this page. Nothing you type is saved or sent anywhere. The only network request is the optional bitcoin price lookup (CoinGecko). Free and open-source, MIT License.</p>
 
@@ -103,7 +112,9 @@ const pct=x=>ok(x)?(x*100).toFixed(2)+'%':'–';
 const num=(x,d=2)=>ok(x)?x.toLocaleString('en-US',{maximumFractionDigits:d}):'–';
 const sgn=p=>(p>0?'+':'')+Math.round(p*100)+'%';
 $('date').valueAsDate=new Date();
-let rows=[],srows=[],scenRows=[];
+let rows=[],srows=[],scenRows=[],dirty=false;
+
+window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue='';}});
 
 async function getPrice(){
   $('pxsrc').textContent='(loading…)';
@@ -117,22 +128,24 @@ async function getPrice(){
 }
 
 function scenario(chg,v){
-  const b2=v.b*(1+chg), nav2=v.btc*b2, claims=v.debt+v.pref, oblig=v.intr+v.pdiv;
-  return {
-    price:b2, nav:nav2, change:nav2-v.nav, vsCost:nav2-v.cost,
-    cover:claims>0?nav2/claims:NaN, claims, oblig,
-    sell:oblig>0?oblig/b2:NaN,
-    mnav:v.mcap/nav2
-  };
+  const b2=v.b*(1+chg),nav2=v.btc*b2,claims=v.debt+v.pref,oblig=v.intr+v.pdiv;
+  return {price:b2,nav:nav2,change:nav2-v.nav,vsCost:nav2-v.cost,
+    cover:claims>0?nav2/claims:NaN,claims,oblig,
+    sell:oblig>0?oblig/b2:NaN,mnav:v.mcap/nav2};
+}
+
+function table(id,head,data,colorFn){
+  $(id).innerHTML='<tr><th>'+head[0]+'</th><th>'+head[1]+'</th></tr>'+
+    data.map((r,i)=>'<tr><td>'+r[0]+'</td><td class="v '+(colorFn?colorFn(i):'')+'">'+r[1]+'</td></tr>').join('');
 }
 
 function calc(){
   const v={btc:n('btc'),cost:n('cost'),sh:n('shares'),px:n('px'),cash:n('cash'),assets:n('assets'),
-        debt:n('debt')||0,pref:n('pref')||0,intr:n('interest')||0,pdiv:n('prefdiv')||0,b:n('btcpx')};
+    debt:n('debt')||0,pref:n('pref')||0,intr:n('interest')||0,pdiv:n('prefdiv')||0,b:n('btcpx')};
   const btc0=n('btc0'),sh0=n('shares0'),chg=n('drop')/100;
   $('dropv').textContent=sgn(chg);
   v.nav=v.btc*v.b; v.mcap=v.sh*v.px;
-  const ev=v.mcap+v.debt+v.pref-v.cash, bps=v.btc/v.sh, bps0=btc0/sh0;
+  const ev=v.mcap+v.debt+v.pref-v.cash,bps=v.btc/v.sh,bps0=btc0/sh0;
   rows=[
     ['Market value of bitcoin (BTC NAV)',usd(v.nav)],
     ['Average cost per BTC',usd(v.cost/v.btc)],
@@ -145,7 +158,7 @@ function calc(){
     ['Bitcoin as % of total assets (at market)',pct(v.nav/v.assets)],
     ['Debt + preferred as % of BTC NAV',pct((v.debt+v.pref)/v.nav)]
   ];
-  $('out').innerHTML='<tr><th>Metric</th><th>Value</th></tr>'+rows.map(r=>`<tr><td>${r[0]}</td><td class="v">${r[1]}</td></tr>`).join('');
+  table('out',['Metric','Value'],rows);
 
   const s=scenario(chg,v);
   srows=[
@@ -158,14 +171,13 @@ function calc(){
     ['Years of interest + preferred dividends covered by cash',s.oblig>0?(ok(v.cash/s.oblig)?num(v.cash/s.oblig,1)+' years':'–'):'no fixed obligations'],
     ['Bitcoin you would have to sell to pay one year of obligations',ok(s.sell)?num(s.sell,2)+' BTC':'–']
   ];
-  $('stress').innerHTML='<tr><th>After a '+sgn(chg)+' move</th><th>Value</th></tr>'+srows.map((r,i)=>{
-    let cls='';
-    if(i===2&&ok(s.change))cls=s.change<0?'bad':'good';
-    if(i===4&&s.claims>0&&ok(s.cover))cls=s.cover<1?'bad':'good';
-    return `<tr><td>${r[0]}</td><td class="v ${cls}">${r[1]}</td></tr>`}).join('');
+  table('stress',['After a '+sgn(chg)+' move','Value'],srows,i=>{
+    if(i===2&&ok(s.change))return s.change<0?'bad':'good';
+    if(i===4&&s.claims>0&&ok(s.cover))return s.cover<1?'bad':'good';
+    return '';
+  });
 
-  const set=[-0.75,-0.5,0,0.5,1];
-  const S=set.map(c=>scenario(c,v));
+  const set=[-0.75,-0.5,0,0.5,1],S=set.map(c=>scenario(c,v));
   scenRows=[
     ['Bitcoin move',...set.map(sgn)],
     ['Bitcoin price',...S.map(x=>usd(x.price))],
@@ -174,26 +186,28 @@ function calc(){
     ['BTC NAV ÷ (debt + preferred)',...S.map(x=>x.claims>0&&ok(x.cover)?num(x.cover)+'×':'–')],
     ['mNAV (same share price)',...S.map(x=>ok(x.mnav)?num(x.mnav)+'×':'–')]
   ];
-  $('scen').innerHTML=scenRows.map((r,i)=>'<tr>'+r.map((c,j)=>i===0?`<th>${c}</th>`:(j===0?`<td>${c}</td>`:`<td class="v">${c}</td>`)).join('')+'</tr>').join('');
+  $('scen').innerHTML=scenRows.map((r,i)=>'<tr>'+r.map((c,j)=>i===0?'<th>'+c+'</th>':(j===0?'<td>'+c+'</td>':'<td class="v">'+c+'</td>')).join('')+'</tr>').join('');
 }
-document.querySelectorAll('input').forEach(i=>i.addEventListener('input',calc));
+
+document.querySelectorAll('input,textarea').forEach(el=>el.addEventListener('input',()=>{dirty=true;calc();}));
 
 function download(){
   calc();
   const q=s=>'"'+String(s??'').replace(/"/g,'""')+'"';
-  const L=[];
-  L.push(['Bitcoin Treasury Lab']);
-  L.push(['Name',$('name').value],['Course',$('course').value],['Instructor',$('instructor').value],['Date',$('date').value],[]);
-  L.push(['Company',$('co').value],['Ticker',$('ticker').value],['Filing',$('filing').value],['As of',$('asof').value],[]);
-  L.push(['INPUTS']);
+  const L=[['Bitcoin Treasury Lab'],
+    ['Name',$('name').value],['Course',$('course').value],['Instructor',$('instructor').value],['Date',$('date').value],[],
+    ['Company',$('co').value],['Ticker',$('ticker').value],['Filing',$('filing').value],['As of',$('asof').value],[],['INPUTS']];
   [['btc','Bitcoin held'],['cost','Cost basis'],['shares','Diluted shares'],['px','Share price'],['cash','Cash'],['assets','Total assets'],['debt','Debt'],['pref','Preferred'],['interest','Annual interest'],['prefdiv','Annual preferred dividends'],['btc0','Earlier BTC'],['shares0','Earlier shares'],['btcpx','Bitcoin price']].forEach(([id,l])=>L.push([l,$(id).value]));
   L.push([],['METRICS'],...rows,[],['SCENARIO TEST ('+sgn(n('drop')/100)+' move)'],...srows,[],['SCENARIO COMPARISON'],...scenRows,[],['EVALUATION']);
   ['q1','q2','q3','q4','q5'].forEach((id,i)=>L.push(['Question '+(i+1),$(id).value]));
+  L.push([],['SOURCES']);
+  $('src').value.split('\n').map(x=>x.trim()).filter(Boolean).forEach((x,i)=>L.push(['Source '+(i+1),x]));
   const csv='\ufeff'+L.map(r=>r.map(q).join(',')).join('\r\n');
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
   a.download=(($('name').value||'student').replace(/\s+/g,'_'))+'_Bitcoin_Treasury_Lab.csv';
   a.click();
+  dirty=false;
 }
 calc();
 </script>
