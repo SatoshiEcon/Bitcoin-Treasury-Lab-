@@ -70,6 +70,16 @@ button.sec{background:#3b6ea5}
 <p class="small">Debt maturities are usually in the debt footnote. Count convertibles that holders can put back to the company within 24 months. Collateral is usually in the bitcoin or debt footnote. Enter 0 if none.</p>
 <label>Custodian(s) named in the filing, and how the bitcoin is held</label>
 <input id="custody" placeholder="e.g. Coinbase Custody and Fidelity Digital Assets, multi-custodian, cold storage">
+<label>Why does this company hold bitcoin? (pick the closest, then back it up in Question 1)</label>
+<select id="purpose" style="width:100%;padding:8px;font-size:15px;border:1px solid #bbb;border-radius:6px;font-family:inherit">
+<option value="">Choose one</option>
+<option>Treasury diversification: a share of excess cash held as a reserve asset</option>
+<option>Bitcoin treasury company: accumulating bitcoin is the core strategy</option>
+<option>Miner: bitcoin is the company's product and inventory</option>
+<option>Operating use: payments, products or services built on bitcoin</option>
+<option>Other (explain in Question 1)</option>
+</select>
+<p class="small">The purpose decides what "sound" means. A small reserve and an all-in strategy are judged against different standards, so judge the decision against the company's own reason for holding.</p>
 <p class="small">For Bitcoin yield, also enter the figures from one earlier period (e.g. start of the year):</p>
 <div class="grid">
 <div><label>Earlier period: BTC held</label><input class="num" id="btc0" type="number" step="any"></div>
@@ -83,28 +93,17 @@ button.sec{background:#3b6ea5}
 <div><label>Share price date</label><input id="pxdate" type="date"></div>
 <div><label>Bitcoin price ($) <span class="small" id="pxsrc">(type it in, or fetch today's)</span></label><input class="num" id="btcpx" type="number" step="any"></div>
 <div><label>Bitcoin price date</label><input id="btcpxdate" type="date"></div>
+<div><label>3-month U.S. Treasury yield (%)</label><input class="num" id="rf" type="number" step="any"></div>
+<div><label>Treasury yield date and source</label><input id="rfsrc" placeholder="e.g. treasury.gov, Oct 1, 2026"></div>
 </div>
+<p class="small">The Treasury yield measures what the company gave up: the interest it could have earned holding cash in Treasury bills instead of bitcoin.</p>
 <button onclick="getPrice()">Get today's bitcoin price</button>
 
 <h2>Step 3: The metrics</h2>
-<div class="what"><strong>What's happening:</strong> these are the metrics Strategy reports, plus a few it doesn't. <strong>mNAV</strong> is market cap divided by the market value of the bitcoin. Above 1, investors pay a premium for each dollar of bitcoin the company holds, which lets it issue stock to buy more. <strong>Bitcoin yield</strong> is the percent change in bitcoin per diluted share. It is a company KPI, not a yield in the bond sense, and it ignores debt and preferred claims. That's why the table also shows bitcoin per share <strong>net of debt and preferred</strong>: what's left for shareholders after the creditors and preferred holders are paid.</div>
+<div class="what"><strong>What's happening:</strong> these are the metrics bitcoin treasury companies report, plus a few they don't. <strong>mNAV</strong> is market cap divided by the market value of the bitcoin. Above 1, investors pay a premium for each dollar of bitcoin the company holds, which lets it issue stock to buy more. <strong>Bitcoin yield</strong> is the percent change in bitcoin per diluted share. It is a company KPI, not a yield in the bond sense, and it ignores debt and preferred claims. That's why the table also shows bitcoin per share <strong>net of debt and preferred</strong>: what's left for shareholders after the creditors and preferred holders are paid.</div>
 <button class="sec" onclick="calc()">Calculate</button>
 <div class="check" id="checks"></div>
 <table id="out"></table>
-
-<h3>Compare with Strategy (MSTR)</h3>
-<p class="small">Enter Strategy's figures from its latest filing or its investor-relations bitcoin page, on the same dates as your company if you can, using the same bitcoin price as above.</p>
-<div class="grid">
-<div><label>Strategy: bitcoin held (BTC)</label><input class="num" id="m_btc" type="number" step="any"></div>
-<div><label>Strategy: diluted shares</label><input class="num" id="m_shares" type="number" step="any"></div>
-<div><label>Strategy: share price ($)</label><input class="num" id="m_px" type="number" step="any"></div>
-<div><label>Strategy: cash ($)</label><input class="num" id="m_cash" type="number" step="any"></div>
-<div><label>Strategy: total assets ($)</label><input class="num" id="m_assets" type="number" step="any"></div>
-<div><label>Strategy: total debt ($)</label><input class="num" id="m_debt" type="number" step="any" value="0"></div>
-<div><label>Strategy: preferred, liquidation value ($)</label><input class="num" id="m_pref" type="number" step="any" value="0"></div>
-<div><label>Strategy: annual interest + preferred dividends ($)</label><input class="num" id="m_oblig" type="number" step="any" value="0"></div>
-</div>
-<div class="scroll"><table id="cmp"></table></div>
 
 <h2>Step 4: Scenario test (down and up)</h2>
 <div class="what"><strong>What's happening:</strong> bitcoin has fallen more than 50% several times, and it has also more than doubled in a single year. A CFO shows the board both. On the downside, the question is whether the company can still cover its debt, interest and preferred dividends, and whether near-term maturities or collateral calls could force it to sell. On the upside, fair-value accounting puts the gain straight into reported earnings. That swings net income, can create tax and covenant questions, and tends to push the mNAV premium up, which tempts management to issue more stock and buy more bitcoin.<br><br><strong>The share price won't sit still.</strong> Treasury company stocks usually move <em>more</em> than bitcoin, and the mNAV premium can shrink or vanish in a sell-off. Use the beta below to test that: at 1.5, a 50% bitcoin drop takes the share price down 75%.</div>
@@ -117,8 +116,8 @@ button.sec{background:#3b6ea5}
 <div class="scroll"><table id="scen"></table></div>
 
 <h2>Step 5: Your evaluation</h2>
-<label>1. What is this company's strategic reason for holding bitcoin? Quote the filing or a management statement.</label><textarea id="q1"></textarea>
-<label>2. How does its allocation compare with Strategy's? Use the comparison table: mNAV, bitcoin as a share of assets, debt and preferred against bitcoin, and the funding method (operating cash flow, debt, equity, preferred). Could the core business fund these purchases, or does it depend on capital markets?</label><textarea id="q2"></textarea>
+<label>1. What is this company's strategic reason for holding bitcoin? Quote the filing or a management statement, and explain why you classified it as you did in Step 1.</label><textarea id="q1"></textarea>
+<label>2. Do the size, funding and risk of the holding fit that purpose? Use bitcoin as a share of assets, debt and preferred against bitcoin, and the funding method (operating cash flow, debt, equity, preferred). Could the core business fund these purchases, or does it depend on capital markets? What did the company give up to hold it, such as interest forgone or cash the business could have used?</label><textarea id="q2"></textarea>
 <label>3. What does the scenario test say about this company's risk tolerance? On the downside, could it meet interest, preferred payments and near-term maturities without selling bitcoin? Does any pledged bitcoin create a forced-sale risk? What happens to mNAV when the share price falls with bitcoin? On the upside, how would a large gain change its reported earnings and its incentive to buy more?</label><textarea id="q3"></textarea>
 <label>4. Custody: who holds the keys? Is the bitcoin spread across custodians, held in cold storage, or pledged? What would a custodian failure or a seizure mean for this company?</label><textarea id="q4"></textarea>
 <label>5. Tokenomics: how do bitcoin's fixed supply and halving schedule factor into the decision, and where is that argument weakest?</label><textarea id="q5"></textarea>
@@ -130,13 +129,13 @@ button.sec{background:#3b6ea5}
 <tr><td>Uses the numbers</td><td>Every claim points to a metric or a line from the filing, with dates.</td><td>General statements about bitcoin with no figures.</td></tr>
 <tr><td>Both directions</td><td>Covers the downside and the upside, including what each does to earnings, coverage and incentives.</td><td>Only the crash, or only the rally.</td></tr>
 <tr><td>Company-specific</td><td>Explains why this decision fits or doesn't fit this company's cash flow, debt and business.</td><td>Could be about any company.</td></tr>
-<tr><td>Fair comparison</td><td>Compares with Strategy on the same metrics and dates, and explains the differences.</td><td>Says "smaller than Strategy" and stops.</td></tr>
+<tr><td>Judged against its purpose</td><td>Tests the decision against the company's own stated reason for holding, and uses the right yardstick for that type of holder.</td><td>Judges a small cash reserve as if it were an all-in bitcoin strategy, or the reverse.</td></tr>
 <tr><td>Weakest point</td><td>Names the strongest argument against your own conclusion and answers it.</td><td>One-sided.</td></tr>
 <tr><td>CFO recommendation</td><td>A specific change: size, funding, custody, hedging, disclosure, with the reason.</td><td>"They should be careful."</td></tr>
 </table>
 
 <h2>Step 7: Sources (links)</h2>
-<div class="what"><strong>What's happening:</strong> put links to all of the sources you used to find the information above, one link per line. Later, you can turn them into APA citations for your paper. <strong>Required:</strong> the SEC filing you used (from sec.gov/edgar or the company's investor-relations page), Strategy's source, and the sources of your share and bitcoin prices. Add any other articles or pages you used. Full APA references go in your paper.</div>
+<div class="what"><strong>What's happening:</strong> put links to all of the sources you used to find the information above, one link per line. Later, you can turn them into APA citations for your paper. <strong>Required:</strong> the SEC filing you used (from sec.gov/edgar or the company's investor-relations page), and the sources of your share price, bitcoin price and Treasury yield. Add any other articles or pages you used. Full APA references go in your paper.</div>
 <label>Links to your sources (one per line)</label>
 <textarea id="src" placeholder="https://www.sec.gov/...&#10;https://www.coingecko.com/en/coins/bitcoin"></textarea>
 
@@ -155,7 +154,7 @@ const num=(x,d=2)=>ok(x)?x.toLocaleString('en-US',{maximumFractionDigits:d}):'�
 const mult=x=>ok(x)?num(x)+'×':'–';
 const sgn=p=>(p>0?'+':'')+Math.round(p*100)+'%';
 $('date').valueAsDate=new Date();
-let rows=[],srows=[],scenRows=[],cmpRows=[],checkText=[],dirty=false;
+let rows=[],srows=[],scenRows=[],checkText=[],dirty=false;
 
 window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue='';}});
 
@@ -173,7 +172,7 @@ async function getPrice(){
 
 function inputs(){
   return {btc:n('btc'),cost:n('cost'),sh:n('shares'),px:n('px'),cash:n('cash')||0,assets:n('assets'),ocf:n('ocf'),
-    debt:n('debt')||0,pref:n('pref')||0,due:n('due24')||0,pledged:n('pledged')||0,
+    debt:n('debt')||0,rf:n('rf'),pref:n('pref')||0,due:n('due24')||0,pledged:n('pledged')||0,
     intr:n('interest')||0,pdiv:n('prefdiv')||0,b:n('btcpx'),beta:ok(n('beta'))?n('beta'):1};
 }
 
@@ -233,29 +232,14 @@ function calc(){
     ['Debt due within 24 months as % of cash',v.due>0?pct(v.due/v.cash):'none due'],
     ['Annual interest + preferred dividends',usd(oblig)],
     ['Operating cash flow ÷ annual obligations',oblig>0?mult(v.ocf/oblig):'no fixed obligations'],
-    ['Years of obligations covered by cash',oblig>0?num(v.cash/oblig,1)+' years':'no fixed obligations']
+    ['Years of obligations covered by cash',oblig>0?num(v.cash/oblig,1)+' years':'no fixed obligations'],
+    ['Interest forgone per year (cost basis × Treasury yield)',ok(v.rf)?usd(v.cost*v.rf/100):'enter the Treasury yield']
   ];
   table('out',['Metric','Value'],rows,i=>{
     if(i===14&&oblig>0&&ok(v.ocf))return v.ocf/oblig<1?'bad':'good';
     return '';
   });
   runChecks(v);
-
-  // Strategy comparison
-  const m={btc:n('m_btc'),sh:n('m_shares'),px:n('m_px'),cash:n('m_cash')||0,assets:n('m_assets'),debt:n('m_debt')||0,pref:n('m_pref')||0,oblig:n('m_oblig')||0};
-  m.nav=m.btc*v.b;m.mcap=m.sh*m.px;const mev=m.mcap+m.debt+m.pref-m.cash;
-  const name=$('ticker').value||$('co').value||'Your company';
-  cmpRows=[
-    ['Metric',name,'Strategy (MSTR)'],
-    ['Bitcoin held',num(v.btc,2),num(m.btc,2)],
-    ['BTC NAV',usd(v.nav),usd(m.nav)],
-    ['mNAV',mult(v.mcap/v.nav),mult(m.mcap/m.nav)],
-    ['mNAV, EV basis',mult(ev/v.nav),mult(mev/m.nav)],
-    ['Bitcoin as % of total assets',pct(v.nav/v.assets),pct(m.nav/m.assets)],
-    ['Debt + preferred as % of BTC NAV',pct((v.debt+v.pref)/v.nav),pct((m.debt+m.pref)/m.nav)],
-    ['Annual obligations as % of BTC NAV',pct(oblig/v.nav),pct(m.oblig/m.nav)]
-  ];
-  $('cmp').innerHTML=cmpRows.map((r,i)=>'<tr>'+r.map((c,j)=>i===0?'<th>'+c+'</th>':(j===0?'<td>'+c+'</td>':'<td class="v">'+c+'</td>')).join('')+'</tr>').join('');
 
   // Scenario
   const s=scenario(chg,v);
@@ -293,19 +277,18 @@ function calc(){
   $('scen').innerHTML=scenRows.map((r,i)=>'<tr>'+r.map((c,j)=>i===0?'<th>'+c+'</th>':(j===0?'<td>'+c+'</td>':'<td class="v">'+c+'</td>')).join('')+'</tr>').join('');
 }
 
-document.querySelectorAll('input,textarea').forEach(el=>el.addEventListener('input',()=>{dirty=true;calc();}));
+document.querySelectorAll('input,textarea,select').forEach(el=>el.addEventListener('input',()=>{dirty=true;calc();}));
 
 function download(){
   calc();
   const q=s=>'"'+String(s??'').replace(/"/g,'""')+'"';
   const L=[['Bitcoin Treasury Lab'],
     ['Name',$('name').value],['Course',$('course').value],['Instructor',$('instructor').value],['Date',$('date').value],[],
-    ['Company',$('co').value],['Ticker',$('ticker').value],['Filing',$('filing').value],['As of',$('asof').value],['Custody',$('custody').value],[],['INPUTS']];
-  [['btc','Bitcoin held'],['cost','Cost basis'],['shares','Diluted shares'],['cash','Cash'],['assets','Total assets'],['ocf','Operating cash flow (12 months)'],['debt','Debt'],['pref','Preferred'],['due24','Debt due within 24 months'],['pledged','Bitcoin pledged as collateral'],['interest','Annual interest'],['prefdiv','Annual preferred dividends'],['btc0','Earlier BTC'],['shares0','Earlier shares'],['px','Share price'],['pxdate','Share price date'],['btcpx','Bitcoin price'],['btcpxdate','Bitcoin price date'],['beta','Share price beta'],
-   ['m_btc','Strategy BTC'],['m_shares','Strategy diluted shares'],['m_px','Strategy share price'],['m_cash','Strategy cash'],['m_assets','Strategy total assets'],['m_debt','Strategy debt'],['m_pref','Strategy preferred'],['m_oblig','Strategy annual obligations']].forEach(([id,l])=>L.push([l,$(id).value]));
+    ['Company',$('co').value],['Ticker',$('ticker').value],['Filing',$('filing').value],['As of',$('asof').value],['Custody',$('custody').value],['Purpose',$('purpose').value],[],['INPUTS']];
+  [['btc','Bitcoin held'],['cost','Cost basis'],['shares','Diluted shares'],['cash','Cash'],['assets','Total assets'],['ocf','Operating cash flow (12 months)'],['debt','Debt'],['pref','Preferred'],['due24','Debt due within 24 months'],['pledged','Bitcoin pledged as collateral'],['interest','Annual interest'],['prefdiv','Annual preferred dividends'],['btc0','Earlier BTC'],['shares0','Earlier shares'],['px','Share price'],['pxdate','Share price date'],['btcpx','Bitcoin price'],['btcpxdate','Bitcoin price date'],['beta','Share price beta'],['rf','Treasury yield (%)'],['rfsrc','Treasury yield source']].forEach(([id,l])=>L.push([l,$(id).value]));
   L.push([],['METRICS'],...rows);
   if(checkText.length)L.push([],['DATA CHECKS'],...checkText.map(x=>['Check',x]));
-  L.push([],['COMPARISON WITH STRATEGY'],...cmpRows,[],['SCENARIO TEST ('+sgn(n('drop')/100)+' move)'],...srows,[],['SCENARIO COMPARISON'],...scenRows,[],['EVALUATION']);
+  L.push([],['SCENARIO TEST ('+sgn(n('drop')/100)+' move)'],...srows,[],['SCENARIO COMPARISON'],...scenRows,[],['EVALUATION']);
   ['q1','q2','q3','q4','q5','q6'].forEach((id,i)=>L.push(['Question '+(i+1),$(id).value]));
   L.push([],['SOURCES']);
   $('src').value.split('\n').map(x=>x.trim()).filter(Boolean).forEach((x,i)=>L.push(['Source '+(i+1),x]));
